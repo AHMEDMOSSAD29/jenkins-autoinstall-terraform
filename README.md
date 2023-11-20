@@ -13,6 +13,7 @@ export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_ACCESS_KEY"
 export AWS_REGION="YOUR_REGION"
 ```
+-press enter for defaults
 ```
 ssh-keygen -t rsa -b 2048 -f admin
 ```
