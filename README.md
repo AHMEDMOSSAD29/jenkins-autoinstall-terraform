@@ -72,4 +72,4 @@ sudo ssh ansible@(public_ip of node02)
 ```
 docker logs jenkins
 ``` 
--you can change ansible task which is jenkins in this repo and number of nodes to be suitable with your spacific task 
+- ##### you can change ansible task which is jenkins in this repo and number of nodes to be suitable with your spacific task 
