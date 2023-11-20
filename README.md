@@ -1,86 +1,95 @@
-# jenkins-autoinstall-terraform
-- run jenkins container on docker using ansible and prepare environment using bash script on EC2 instance with ubuntu OS using terraform as IAC tool
-- this repo create two instances the first one is control node and the second one is node01
-- stablish ssh connection between the two instances using bash scripts
-- install ansible on control node and docker on node01 using bash scripts
-  
-### prerequisites :
+## Jenkins-Autoinstall-Terraform
+This project automates the installation of Jenkins on a Docker container using Ansible. It also sets up the environment on an EC2 instance with Ubuntu OS using Terraform as an Infrastructure-as-Code (IAC) tool. The repository creates two instances: the control node and node01. It establishes an SSH connection between the two or more instances using bash scripts and installs Ansible on the control node and Docker on node01.
 
-- install terraform :
-  ```
-  https://developer.hashicorp.com/terraform/install
-  ```
-  - or for ubuntu :
-    
-  ```
-  wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release 
-  - cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-  sudo apt update && sudo apt install terraform
-  ```
-### commands:
-- after cloning this repo run :
+### Prerequisites :
+Before running the installation, make sure you have Terraform installed. You can download it from the official website: 
+```
+Terraform Install
+```
+
+- Alternatively, for Ubuntu, you can run the following commands to install Terraform:
+```
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
+```
+### Installation
+- Follow these steps to install and configure Jenkins:
+
+1- Clone this repository:
+```
+git clone https://github.com/your-username/jenkins-autoinstall-terraform.git
+```
 ```
 cd jenkins-autoinstall-terraform
 ```
+2- Set the required environment variables to acess your AWS account :
 ```
 export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_ACCESS_KEY"
 export AWS_REGION="YOUR_REGION"
 ```
-- Press enter for defaults
+3- Generate an SSH key pair by running the following command and pressing enter for defaults:
 ```
 ssh-keygen -t rsa -b 2048 -f admin
 ```
-- then
+4- Initialize Terraform and apply the configuration:
 ```
 terraform init
 ```
 ```
 terraform apply
 ```
-- ips of all nodes will apper as output of terraform 
+ - Hint:The IPs of all nodes will appear as the output of Terraform. Connect to the control node using SSH:
 ```
-sudo ssh -i "admin" ubuntu@(ip of control node)
+sudo ssh -i "admin" ubuntu@(IP of control node)
 ```
+5- Switch to the ansible user (password is "ansible", you may change it):
 ```
-su - ansible (password is *ansible* you may change it)
+su - ansible
 ```
+6- Copy the SSH key to node01:
 ```
 ssh-copy-id node01
 ```
---------------------------------------------------------------------------------
-###### if you add more than one node for other ansible tasks run (optional):
+-----------------------------------------------------------------------------------------------------------------
+If you have more than one node for other Ansible tasks (optional), copy the SSH key to additional nodes by running:
 ```
 ssh-copy-id node(x)
 ```
---------------------------------------------------------------------------------
-- add the content of inventory file here :
+-----------------------------------------------------------------------------------------------------------------
+7- Open the inventory file and add the necessary content:
 ```
 vim inventory
 ```
-- add the content of docker-jenkins.yaml file here :
+8- Open the docker-jenkins.yaml file and add the necessary content:
 ```
 vim docker.yaml
 ```
+9- Run the Ansible playbook to install Docker:
 ```
 ansible-playbook -i inventory docker.yaml
 ```
-- in your browser add :
+10- In your browser, open the following URL to access Jenkins:
 ```
 http://(public_ip of node01):8080
 ```
----------------------------------------------------------------------------------------
-###### if you have more than one node for other ansible tasks also run (optional): 
+----------------------------------------------------------------------------------------------------------------------
+If you have more than one node for other Ansible tasks (optional), you can access Jenkins on additional nodes using the following URL:
 ```
 http://(public_ip of node(x)):8080
 ```
----------------------------------------------------------------------------------------
-- if you need to continue installation run :
+----------------------------------------------------------------------------------------------------------------------
+11- If you need to continue the installation, connect to the node01 instance using SSH:
 ```
 sudo ssh ansible@(public_ip of node01)
 ```
+12- To view the Jenkins logs to add the key , run the following command:
 ```
 docker logs jenkins
 ```
-- ##### you can change ansible task which is jenkins in this repo and number of nodes to be suitable with your spacific task 
+- Note: You can modify the Ansible task (which is Jenkins in this repository) and the number of nodes to suit your specific task.
+
+- Feel free to make any necessary changes and contribute to this project!
+
+- That's it! You have successfully installed and configured Jenkins using Ansible and Terraform.
