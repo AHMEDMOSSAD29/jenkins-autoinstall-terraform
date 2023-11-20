@@ -15,7 +15,7 @@ sudo apt update && sudo apt install terraform
 ```
 2- Create an AWS account: If you don't have an AWS account, go to the AWS website and create one.
 
-3- Create an IAM user: In the AWS Management Console, go to the IAM service. Create a new IAM user with the necessary permissions for project. Make sure to save the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY associated with this user.
+3- Create an IAM user: In the AWS Management Console, go to the IAM service. Create a new IAM user Make sure to save the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY associated with this user.
 
 4- Download the credentials: After creating the IAM user, you can download the CSV file containing the credentials. This file includes the access key ID and secret access key. Save this file locally in a secure location.
 
