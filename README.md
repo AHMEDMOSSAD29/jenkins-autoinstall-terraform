@@ -2,7 +2,7 @@
 This project automates the installation of Jenkins on a Docker container using Ansible. It also sets up the environment on an EC2 instance with Ubuntu OS using Terraform as an Infrastructure-as-Code (IAC) tool. The repository creates two instances: the control node and node01. It establishes an SSH connection between the two or more instances using bash scripts and installs Ansible on the control node and Docker on node01.
 
 ### Prerequisites :
-Before running the installation, make sure you have Terraform installed. You can download it from the official website: 
+1- Before running the installation, make sure you have Terraform installed. You can download it from the official website: 
 ```
 Terraform Install
 ```
@@ -13,6 +13,12 @@ wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/sha
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install terraform
 ```
+2- Create an AWS account: If you don't have an AWS account, go to the AWS website and create one.
+
+3- Create an IAM user: In the AWS Management Console, go to the IAM service. Create a new IAM user with the necessary permissions for project. Make sure to save the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY associated with this user.
+
+4- Download the credentials: After creating the IAM user, you can download the CSV file containing the credentials. This file includes the access key ID and secret access key. Save this file locally in a secure location.
+
 ### Installation
 - Follow these steps to install and configure Jenkins:
 
