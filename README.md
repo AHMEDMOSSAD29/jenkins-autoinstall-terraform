@@ -3,7 +3,21 @@
 - this repo create two instances the first one is control node and the second one is node01
 - stablish ssh connection between the two instances using bash scripts
 - install ansible on control node and docker on node01 using bash scripts
-## commands:
+### prerequisites :
+
+- install terraform :
+  ```
+  https://developer.hashicorp.com/terraform/install
+  ```
+  - or
+    
+  ```
+  wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release 
+  - cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+  sudo apt update && sudo apt install terraform
+  ```
+### commands:
 - after cloning this repo run :
 ```
 cd jenkins-autoinstall-terraform
@@ -49,7 +63,7 @@ vim docker.yaml
 ```
 ansible-playbook -i inventory docker.yaml
 ```
--in your browser add :
+- in your browser add :
 ```
 http://(public_ip of node01):8080
 ```
@@ -57,7 +71,7 @@ http://(public_ip of node01):8080
 ```
 http://(public_ip of node02):8080
 ```
--if you need to continue installation run :
+- if you need to continue installation run :
 ```
 sudo ssh ansible@(public_ip of node01)
 ```
@@ -68,7 +82,7 @@ docker logs jenkins
 ```
 sudo ssh ansible@(public_ip of node02)
 ```
--and
+- and
 ```
 docker logs jenkins
 ``` 
