@@ -10,10 +10,16 @@ sudo apt install software-properties-common -y
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 # Install Ansible
 sudo apt install ansible -y
+# Install Docker
+#sudo apt install docker.io -y
 # Create user ansible with password ansible and give sudo permission
 sudo useradd -m -s /bin/bash -c "ansible" ansible
 sudo echo "ansible:ansible" | sudo chpasswd
 sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+# Add user to the docker group
+#sudo usermod -aG docker ansible
+# Ensure correct permissions for Docker daemon socket
+#sudo chmod 666 /var/run/docker.sock
 # Create SSH keys for user ansible
 sudo -u ansible ssh-keygen -t rsa -N "" -f /home/ansible/.ssh/id_rsa
 # Create SSH config file

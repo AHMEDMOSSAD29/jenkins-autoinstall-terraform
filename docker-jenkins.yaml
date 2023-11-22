@@ -68,10 +68,10 @@
       pip:
         name: docker
         state: present
-
+    
     - name: Pull Jenkins Docker image
       docker_image:
-        name: jenkins/jenkins
+        name: ahmedmosaad112/jenkins-with-docker:lts
         source: pull
         state: present
 
@@ -86,12 +86,13 @@
     - name: Create Jenkins container
       docker_container:
         name: jenkins
-        image: jenkins/jenkins
+        image: ahmedmosaad112/jenkins-with-docker:lts
         ports:
           - "8080:8080"
           - "50000:50000"
         volumes:
-          - "/var/jenkins_home:/var/jenkins_home"
+          - "/var/jenkins_home:/var/jenkins_home"  # you may cahnge volume to be presist
+          - "/var/run/docker.sock:/var/run/docker.sock" # to use docker of the host 
         restart_policy: always
         container_default_behavior: compatibility
 
