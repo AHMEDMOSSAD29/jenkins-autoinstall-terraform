@@ -17,7 +17,7 @@ pipeline {
                 docker build -t app .
 		docker tag app ahmedmosaad112/app:v1
   		docker push ahmedmosaad112/app:v1
-    		docker run -d --name application -p 3000 ahmedmosaad112/app:v1
+    		docker run -d --name application -p 3000:3000 ahmedmosaad112/app:v1
                 """
             }
         }
