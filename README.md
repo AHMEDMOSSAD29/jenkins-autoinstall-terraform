@@ -1,5 +1,5 @@
 ## Jenkins-Autoinstall-Terraform
-This project automates the installation of Jenkins on a Docker as a container with custom docker image [docker hub image](https://hub.docker.com/layers/ahmedmosaad112/jenkins-with-docker/lts/images/sha256-7cc22cc5963a17e970a2bb2282e24316c728fd4a81798161678862397630f779?context=repo) the container use docker daemon of node01 using Ansible . It also sets up the environment and establishes an SSH connection between the two or more instances using bash scripts on an EC2 instance of AWS with Ubuntu OS using Terraform as an Infrastructure-as-Code (IAC) tool.  
+This project create a pipeline using nodejs app and automates the installation of Jenkins on a Docker as a container with custom docker image [docker hub image](https://hub.docker.com/layers/ahmedmosaad112/jenkins-with-docker/lts/images/sha256-7cc22cc5963a17e970a2bb2282e24316c728fd4a81798161678862397630f779?context=repo) the container use docker daemon of node01 using Ansible . It also sets up the environment and establishes an SSH connection between the two or more instances using bash scripts on an EC2 instance of AWS with Ubuntu OS using Terraform as an Infrastructure-as-Code (IAC) tool.  
 ### Prerequisites :
 1- Before running the installation, make sure you have Terraform installed. You can download it from the official website: 
 ```
