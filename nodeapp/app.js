@@ -40,8 +40,8 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <div class="navbar">
-          <a href="#">Home</a>
-          <a href="#">About</a>
+          <a href="https://www.linkedin.com/in/ahmed-mosaad-91239518a/">Home</a>
+          <a href="https://www.linkedin.com/in/ahmed-mosaad-91239518a/">About</a>
           <a href="https://www.linkedin.com/in/ahmed-mosaad-91239518a/">Contact</a>
         </div>
         <div class="content">
