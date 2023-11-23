@@ -86,7 +86,29 @@ sudo ssh ansible@(public_ip of node01)
 docker logs jenkins
 ```
 ### jenkins Pipeline
-13- 
+13- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
+> Manage Jenkins > Manage Credentials > Global > Add Credentials
+
+Make sure to use Dockerhub access token instaed of the password Dockerhub 
+> Account Settings > Security > New Access Token
+
+14- Create Jenkins Pipeline
+Choose pipeline, if not found you can install it from Manage Jenkins > Manage Plugins
+
+In Pipeline Section in the end of the page choose Pipeline script from SCM
+> Add Gihub Repository link [Github link](https://github.com/AHMEDMOSSAD29/jenkins-autoinstall-terraform.git) (you can fork it and use it)> Using Github Credentials
+
+Make usre you choose the right branch which is (main) here and the right path of the which is (Jenkinsfile) here
+
+15- access your dockerhub to find the new image and you can find the image on node01:
+```
+docker images
+```
+16- acess the application:
+```
+http://(public_ip of node01):3000
+```
+
 - Note: You can modify the Ansible task (which is Jenkins in this repository) and the number of nodes to suit your specific task.
 
 - Feel free to make any necessary changes and contribute to this project!
