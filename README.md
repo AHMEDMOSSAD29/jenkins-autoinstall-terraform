@@ -18,7 +18,7 @@ sudo apt update && sudo apt install terraform
 
 4- Download the credentials: After creating the IAM user, you can download the CSV file containing the credentials. This file includes the access key ID and secret access key. Save this file locally in a secure location.
 
-### Installation and runnig of jenkins 
+### Installation 
 - Follow these steps to install and configure Jenkins:
 
 1- Clone this repository:
@@ -45,11 +45,13 @@ terraform init
 ```
 terraform apply
 ```
+### SSH connection 
  - Hint:The IPs of all nodes will appear as the output of Terraform. Connect to the control node using SSH:
 ```
 sudo ssh -i "admin" ubuntu@(IP of control node)
 ```
-5- Switch to the ansible user (password is "ansible", you may change it):
+5- Switch to the ansible user 
+(password is "ansible", you may change it and try again to switch if it refused till switch):
 ```
 su - ansible
 ```
@@ -57,6 +59,7 @@ su - ansible
 ```
 ssh-copy-id node01
 ```
+### Ansible playbook
 7- Open the inventory file and add the necessary content:
 ```
 vim inventory
@@ -73,6 +76,7 @@ ansible-playbook -i inventory docker.yaml
 ```
 http://(public_ip of node01):8080
 ```
+### Managing jenkins
 11- Connect to the node01 instance using SSH:
 ```
 sudo ssh ansible@(public_ip of node01)
@@ -81,7 +85,8 @@ sudo ssh ansible@(public_ip of node01)
 ```
 docker logs jenkins
 ```
-
+### jenkins Pipeline
+13- 
 - Note: You can modify the Ansible task (which is Jenkins in this repository) and the number of nodes to suit your specific task.
 
 - Feel free to make any necessary changes and contribute to this project!
