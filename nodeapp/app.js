@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 100px;
+            background-image: url('https://miro.medium.com/v2/resize:fit:1100/format:webp/0*bV6AQdCcj_2w_3u4.png');
+            background-size: cover;
           }
           h1 {
             color: #333;
