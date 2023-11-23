@@ -108,6 +108,7 @@ docker images
 ```
 http://(public_ip of node01):3000
 ```
+![Alt text]
 
 - Note: You can modify the Ansible task (which is Jenkins in this repository) and the number of nodes to suit your specific task.
 
