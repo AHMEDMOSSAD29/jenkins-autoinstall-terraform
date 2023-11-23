@@ -114,4 +114,4 @@ http://(public_ip of node01):3000
 
 - Feel free to make any necessary changes and contribute to this project!
 
-- That's it! You have successfully installed and configured Jenkins using Ansible and Terraform.
+- That's it! You have successfully run the pipeline,installed and configured Jenkins using Ansible and Terraform.
