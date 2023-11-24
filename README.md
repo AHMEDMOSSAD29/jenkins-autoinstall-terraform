@@ -60,7 +60,7 @@ su - ansible
 ssh-copy-id node01
 ```
 ### Ansible playbook
-7- Open the inventory file and add the necessary content:
+7- Open the inventory file and add the content from [here](inventory):
 ```
 vim inventory
 ```
