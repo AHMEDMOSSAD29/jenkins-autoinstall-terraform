@@ -64,7 +64,7 @@ ssh-copy-id node01
 ```
 vim inventory
 ```
-8- Open the docker-jenkins.yaml file and add the content from [here](docker-jenkins.yaml):
+8- Open the docker.yaml file and add the content from [here](docker-jenkins.yaml):
 ```
 vim docker.yaml
 ```
