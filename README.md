@@ -77,7 +77,11 @@ ansible-playbook -i inventory docker.yaml
 http://(public_ip of node01):8080
 ```
 ### Managing jenkins
-11- Connect to the node01 instance using SSH:
+11- Connect to the node01 instance using SSH from control node:
+```
+ssh node01
+```
+or from new terminal :
 ```
 sudo ssh ansible@(public_ip of node01)
 ```
