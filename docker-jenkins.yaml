@@ -69,9 +69,14 @@
         name: docker
         state: present
     
-    - name: Pull Jenkins Docker image
+    - name: Pull Jenkins master image
       docker_image:
         name: ahmedmosaad112/jenkins-with-docker:lts
+        source: pull
+        state: present
+    - name: Pull Jenkins agent image
+      docker_image:
+        name: ahmedmosaad112/jenkins-ssh-docker
         source: pull
         state: present
 
@@ -83,9 +88,9 @@
         group: "1000"
         mode: "0755"
 
-    - name: Create Jenkins container
+    - name: Create Jenkins master container
       docker_container:
-        name: jenkins
+        name: jenkins-master
         image: ahmedmosaad112/jenkins-with-docker:lts
         ports:
           - "8080:8080"
@@ -96,3 +101,18 @@
         restart_policy: always
         container_default_behavior: compatibility
 
+    - name: Remove existing SSH key pair from Jenkins master container
+      command: docker exec jenkins-master rm -f /var/jenkins_home/.ssh/id_rsa /var/jenkins_home/.ssh/id_rsa.pub
+      become: true
+      ignore_errors: true
+        
+    - name: Execute command to generate SSH key pair inside Jenkins master container
+      command: docker exec jenkins-master ssh-keygen -t rsa -N "" -f /var/jenkins_home/.ssh/id_rsa
+      become: true
+        
+    - name: Copy public key from container to host
+      command: docker cp jenkins-master:/var/jenkins_home/.ssh/id_rsa.pub public_key_jenkins
+      become: true
+
+
+      # docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm --name=jenkins-agent-01 --publish 2200:22 -e "JENKINS_AGENT_SSH_PUBKEY=$(cat /home/ahmed/public_key_jenkins)" ahmedmosaad112/jenkins-ssh-docker
