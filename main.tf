@@ -6,7 +6,7 @@ resource "aws_instance" "node01" {
   tags = {
     Name = "node01"
   }
-  user_data = file("node_01.sh")
+  user_data = file("bash-scripts/node_01.sh")
 }
 # resource "aws_instance" "node02" {
 #   ami           = "ami-0fc5d935ebf8bc3bc"  # Replace with your desired AMI ID
@@ -16,7 +16,7 @@ resource "aws_instance" "node01" {
 #   tags = {
 #     Name = "node02"
 #   }
-#   user_data = file("node_02.sh")
+#   user_data = file("bash-scripts/node_02.sh")
 # }
 
 resource "aws_instance" "control" {
@@ -29,7 +29,7 @@ resource "aws_instance" "control" {
     Name = "control"
   }
 
-  user_data = file("control_01.sh")
+  user_data = file("bash-scripts/control_01.sh")
 
   provisioner "remote-exec" {
     inline = [
