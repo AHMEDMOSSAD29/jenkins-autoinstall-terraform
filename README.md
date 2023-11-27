@@ -1,5 +1,5 @@
 ## Jenkins-Autoinstall-Terraform
-This project create a pipeline and this pipeline create an image from docker file then create a container from this image which have nodejs app and push this image to dockerhub repo and automates the installation of Jenkins on a Docker as a container with custom docker image [docker hub image](https://hub.docker.com/layers/ahmedmosaad112/jenkins-with-docker/lts/images/sha256-7cc22cc5963a17e970a2bb2282e24316c728fd4a81798161678862397630f779?context=repo) the container use docker daemon of node01 using Ansible . It also sets up the environment and establishes SSH connection between the two or more instances using bash scripts on an EC2 instance of AWS with Ubuntu OS using Terraform as an Infrastructure-as-Code (IAC) tool.  
+This project create a pipeline on agent-01 and this pipeline create an image from docker file then create a container from this image which have nodejs app and push this image to dockerhub repo and automates the installation of Jenkins on a Docker as a container with custom docker image [docker hub image](https://hub.docker.com/layers/ahmedmosaad112/jenkins-with-docker/lts/images/sha256-7cc22cc5963a17e970a2bb2282e24316c728fd4a81798161678862397630f779?context=repo) the container use docker daemon of node01 using Ansible . It also sets up the environment and establishes SSH connection between the two or more instances using bash scripts on an EC2 instance of AWS with Ubuntu OS using Terraform as an Infrastructure-as-Code (IAC) tool.  
 ### Prerequisites :
 1- Before running the installation, make sure you have Terraform installed. You can download it from the official website: 
 ```
@@ -89,14 +89,28 @@ sudo ssh ansible@(public_ip of node01)
 ```
 docker logs jenkins
 ```
+### jenkins agent 
+13- on node01 run the following command to run the agent as container :
+```
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm --name=jenkins-agent-01 --publish 2200:22 -e "JENKINS_AGENT_SSH_PUBKEY=$(cat /home/ansible/public_key_jenkins)" ahmedmosaad112/jenkins-ssh-docker
+```
+14- for adding credentials to make master jenkins connect to agent-01 inspect the agent on node01 :
+```
+docker inspect jenkins-agent-01
+```
+15- to get the private key of master for jenkins credentials run the following command on node01 :
+```
+docker exec -it jenkins-master cat /var/jenkins_home/.ssh/id_rsa
+```
+16- use this jenkins credentials when creating node agent-01
 ### jenkins Pipeline
-13- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
+17- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
 > Manage Jenkins > Manage Credentials > Global > Add Credentials
 
 Make sure to use Dockerhub access token instaed of the password Dockerhub 
 > Account Settings > Security > New Access Token
 
-14- Create Jenkins Pipeline
+18- Create Jenkins Pipeline
 Choose pipeline, if not found you can install it from Manage Jenkins > Manage Plugins
 
 In Pipeline Section in the end of the page choose Pipeline script from SCM
@@ -104,11 +118,11 @@ In Pipeline Section in the end of the page choose Pipeline script from SCM
 
 Make usre you choose the right branch which is (main) here and the right path of the which is (Jenkinsfile) here
 
-15- access your dockerhub to find the new image and you can find the image on node01:
+19- access your dockerhub to find the new image and you can find the image on node01:
 ```
 docker images
 ```
-16- acess the application:
+20- acess the application:
 ```
 http://(public_ip of node01):3000
 ```
