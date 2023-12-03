@@ -1,0 +1,22 @@
+---
+- name: Configure Jenkins Slave
+  hosts: ec2-slave
+  become: yes
+  remote_user: ubuntu
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Create working directory for Jenkins slave
+      file:
+        path: /home/ubuntu/jenkins_home
+        state: directory
+        mode: "0777"
+
+    - name: Install OpenJDK
+      apt:
+        name: openjdk-11-jdk
+        state: present
+# run this for ec2 slave and add its ip to inventory file
+# ansible-playbook -i inventory --private-key agent-01.pem slave.yaml
