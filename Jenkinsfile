@@ -34,4 +34,12 @@ pipeline {
             }
         }
     }
+     post {
+    success {
+      slackSend(color: "good", message: "Build completed successfully!")
+    }
+    failure {
+      slackSend(color: "danger", message: "Build failed!")
+    }
+  }
 }
