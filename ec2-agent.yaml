@@ -1,9 +1,70 @@
 ---
-- name: Configure Jenkins Slave
-  hosts: ec2-slave
-  become: yes
-  remote_user: ubuntu
+- name: Install and run Docker
+  hosts: jenkins-ec2-agent
+  become: true
+  gather_facts: yes
+  vars:
+    user_name: ansible
   tasks:
+    - name: Update apt cache (for Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Docker dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - pip
+      when: ansible_os_family == 'Debian'
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    - name: Add user to docker group
+      user:
+        name: "{{ user_name }}"
+        groups: docker
+        append: yes
+
+    - name: Change ownership of Docker socket
+      file:
+        path: /var/run/docker.sock
+        owner: "{{ user_name }}"
+        group: docker
+        mode: '0666'
+
+    - name: Restart Docker daemon
+      service:
+        name: docker
+        state: restarted
+
+
     - name: Update package cache
       apt:
         update_cache: yes
@@ -18,5 +79,5 @@
       apt:
         name: openjdk-11-jdk
         state: present
-# run this for ec2 slave and add its ip to inventory file
-# ansible-playbook -i inventory --private-key agent-01.pem slave.yaml
+# run this for ec2 agent 
+# ansible-playbook  -i inventory ec2-agent.yaml

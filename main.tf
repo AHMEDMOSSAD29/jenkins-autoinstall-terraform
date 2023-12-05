@@ -8,16 +8,16 @@ resource "aws_instance" "node01" {
   }
   user_data = file("bash-scripts/node_01.sh")
 }
-# resource "aws_instance" "node02" {
-#   ami           = "ami-0fc5d935ebf8bc3bc"  # Replace with your desired AMI ID
-#   instance_type = "t2.micro"                # Replace with your desired instance type
-#   key_name = aws_key_pair.admin.key_name
-#   vpc_security_group_ids = [aws_security_group.my_security_group.id]
-#   tags = {
-#     Name = "node02"
-#   }
-#   user_data = file("bash-scripts/node_02.sh")
-# }
+resource "aws_instance" "jenkins-ec2-agent" {
+  ami           = "ami-0fc5d935ebf8bc3bc"  # Replace with your desired AMI ID
+  instance_type = "t2.micro"                # Replace with your desired instance type
+  key_name = aws_key_pair.admin.key_name
+  vpc_security_group_ids = [aws_security_group.my_security_group.id]
+  tags = {
+    Name = "jenkins-ec2-agent"
+  }
+  user_data = file("bash-scripts/node_02.sh")
+}
 
 resource "aws_instance" "control" {
   ami                    = "ami-0fc5d935ebf8bc3bc" # Replace with your desired AMI ID
@@ -35,7 +35,7 @@ resource "aws_instance" "control" {
     inline = [
 
       "echo '${aws_instance.node01.public_ip} node01' | sudo tee -a /etc/hosts",
-      #"echo '${aws_instance.node02.public_ip} node02' | sudo tee -a /etc/hosts",
+      "echo '${aws_instance.jenkins-ec2-agent.public_ip} jenkins-ec2-agent' | sudo tee -a /etc/hosts",
     ]
     connection {
       type        = "ssh"
