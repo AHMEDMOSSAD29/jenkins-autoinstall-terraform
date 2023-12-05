@@ -59,25 +59,37 @@ su - ansible
 ```
 ssh-copy-id node01
 ```
+7- Copy the SSH key to jenkins-ec2-agent:
+```
+ssh-copy-id jenkins-ec2-agent
+```
 ### Ansible playbook
-7- Open the inventory file and add the content from [here](inventory):
+8- Open the inventory file and add the content from [here](inventory):
 ```
 vim inventory
 ```
-8- Open the docker.yaml file and add the content from [here](docker-jenkins.yaml):
+9- Open the docker.yaml file and add the content from [here](docker-jenkins.yaml) for node01 config management:
 ```
 vim docker.yaml
 ```
-9- Run the Ansible playbook to install Docker:
+10- Open the ec2-agent.yaml file and add the content from [here](ec2-agent.yaml) for jenkins-ec2-agent config management:
+```
+vim ec2-agent.yaml
+```
+11- Run the Ansible playbook to for node01:
 ```
 ansible-playbook -i inventory docker.yaml
 ```
-10- In your browser, open the following URL to access Jenkins:
+12- Run the Ansible playbook to for jenkins-ec2-agent:
+```
+ansible-playbook -i inventory ec2-agent.yaml
+```
+13- In your browser, open the following URL to access Jenkins:
 ```
 http://(public_ip of node01):8080
 ```
 ### Managing jenkins
-11- Connect to the node01 instance using SSH from control node:
+14- Connect to the node01 instance using SSH from control node:
 ```
 ssh node01
 ```
@@ -85,32 +97,32 @@ or from new terminal :
 ```
 sudo ssh ansible@(public_ip of node01)
 ```
-12- To view the Jenkins logs to add the key , run the following command:
+15- To view the Jenkins logs to add the key , run the following command:
 ```
 docker logs jenkins
 ```
-### jenkins agent 
-13- on node01 run the following command to run the agent as container :
+### jenkins container agent 
+16- on node01 run the following command to run the agent as container :
 ```
 docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm --name=jenkins-agent-01 --publish 2200:22 -e "JENKINS_AGENT_SSH_PUBKEY=$(cat /home/ansible/public_key_jenkins)" ahmedmosaad112/jenkins-ssh-docker
 ```
-14- for adding credentials to make master jenkins connect to agent-01 inspect the agent on node01 :
+17- for adding credentials to make master jenkins connect to agent-01 inspect the agent on node01 :
 ```
 docker inspect jenkins-agent-01
 ```
-15- to get the private key of master for jenkins credentials run the following command on node01 :
+18- to get the private key of master for jenkins credentials run the following command on node01 :
 ```
 docker exec -it jenkins-master cat /var/jenkins_home/.ssh/id_rsa
 ```
-16- use this jenkins credentials when creating node agent-01
+19- use this jenkins credentials when creating node agent-01
 ### jenkins Pipeline
-17- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
+20- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
 > Manage Jenkins > Manage Credentials > Global > Add Credentials
 
 Make sure to use Dockerhub access token instaed of the password Dockerhub 
 > Account Settings > Security > New Access Token
 
-18- Create Jenkins Pipeline
+21- Create Jenkins Pipeline
 Choose pipeline, if not found you can install it from Manage Jenkins > Manage Plugins
 
 In Pipeline Section in the end of the page choose Pipeline script from SCM
@@ -118,11 +130,11 @@ In Pipeline Section in the end of the page choose Pipeline script from SCM
 
 Make usre you choose the right branch which is (main) here and the right path of the which is (Jenkinsfile) here
 
-19- access your dockerhub to find the new image and you can find the image on node01:
+22- access your dockerhub to find the new image and you can find the image on node01:
 ```
 docker images
 ```
-20- acess the application:
+23- acess the application:
 ```
 http://(public_ip of node01):3000
 ```
