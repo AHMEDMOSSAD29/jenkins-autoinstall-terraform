@@ -126,15 +126,13 @@ docker exec -it jenkins-master cat /var/jenkins_home/.ssh/id_rsa
 23- Provide a name for the node and select the option "Permanent Agent".
 
 24- Enter the Remote directory:
-
-    ```
-    /home/ubuntu/jenkins_home
-    ```
+```
+/home/ubuntu/jenkins_home
+```
 25- Enter the Labels: 
-
-    ```
-    ec2-agent
-    ```
+```
+ ec2-agent
+ ```
 26- Launch method: Select "Launch agents via SSH" to connect to the EC2 instance using SSH.
 
 27- Host: Enter the public IP of jenkins-ec2-agent
