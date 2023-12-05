@@ -115,14 +115,44 @@ docker inspect jenkins-agent-01
 docker exec -it jenkins-master cat /var/jenkins_home/.ssh/id_rsa
 ```
 19- use this jenkins credentials when creating node agent-01
+### jenkins EC2 agent 
+
+20- Go to the Jenkins dashboard and click on "Manage Jenkins" in the left sidebar.
+
+21- Click on "Manage Nodes and Clouds" to access the node configuration page.
+
+22- Click on the "New Node" button to create a new node.
+
+23- Provide a name for the node and select the option "Permanent Agent".
+
+24- Enter the Remote directory:
+
+    ```
+    /home/ubuntu/jenkins_home
+    ```
+25- Enter the Labels: 
+
+    ```
+    ec2-agent
+    ```
+26- Launch method: Select "Launch agents via SSH" to connect to the EC2 instance using SSH.
+
+27- Host: Enter the public IP of jenkins-ec2-agent
+
+28- Credentials: Add SSH credentials to connect to the EC2 instance (copy *admin* private key you generated):
+
+29- Availability: Specify when the node should be available for builds.
+
+30- Click on the "Save" button to create the node.
+
 ### jenkins Pipeline
-20- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
+31- once you open jenkins Add Github and Dockerhub credentials in Jenkins go to :
 > Manage Jenkins > Manage Credentials > Global > Add Credentials
 
 Make sure to use Dockerhub access token instaed of the password Dockerhub 
 > Account Settings > Security > New Access Token
 
-21- Create Jenkins Pipeline
+32- Create Jenkins Pipeline
 Choose pipeline, if not found you can install it from Manage Jenkins > Manage Plugins
 
 In Pipeline Section in the end of the page choose Pipeline script from SCM
@@ -130,11 +160,11 @@ In Pipeline Section in the end of the page choose Pipeline script from SCM
 
 Make usre you choose the right branch which is (main) here and the right path of the which is (Jenkinsfile) here
 
-22- access your dockerhub to find the new image and you can find the image on node01:
+33- access your dockerhub to find the new image and you can find the image on node01:
 ```
 docker images
 ```
-23- acess the application:
+34- acess the application:
 ```
 http://(public_ip of node01):3000
 ```
