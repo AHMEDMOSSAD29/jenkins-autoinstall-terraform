@@ -158,7 +158,7 @@ In Pipeline Section in the end of the page choose Pipeline script from SCM
 
 Make usre you choose the right branch which is (main) here and the right path of the which is (Jenkinsfile) here
 
-33- access your dockerhub to find the new image and you can find the image on node01:
+33- access your dockerhub to find the new image and you can find the image on node01 if you use container as agent:
 ```
 docker images
 ```
